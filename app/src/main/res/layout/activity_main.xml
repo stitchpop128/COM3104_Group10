@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="horizontal"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="50dp"
     >
 
     <TextView
@@ -23,6 +25,6 @@
         android:text="Halo"/>
 <Button
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:text="BT test1"/>
 </LinearLayout>
