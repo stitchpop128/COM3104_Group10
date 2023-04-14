@@ -7,6 +7,10 @@
         <entry key="app/src/main/res/layout/activity_drawing.xml" value="0.1503623188405797" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_map.xml" value="0.1503623188405797" />
+        <entry key="app/src/main/res/layout/fragment_calculator.xml" value="0.14361702127659576" />
+        <entry key="app/src/main/res/layout/fragment_drawing.xml" value="0.14361702127659576" />
+        <entry key="app/src/main/res/layout/fragment_map.xml" value="0.1503623188405797" />
+        <entry key="app/src/main/res/layout/tabbar.xml" value="0.14361702127659576" />
         <entry key="app/src/main/res/menu/menu_nav.xml" value="0.2907692307692308" />
       </map>
     </option>
