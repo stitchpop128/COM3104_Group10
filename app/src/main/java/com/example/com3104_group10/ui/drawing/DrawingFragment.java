@@ -1,4 +1,4 @@
-package com.example.com3104_group10.ui.home;
+package com.example.com3104_group10.ui.drawing;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

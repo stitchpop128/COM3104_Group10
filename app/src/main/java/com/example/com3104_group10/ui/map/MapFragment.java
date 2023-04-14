@@ -1,4 +1,4 @@
-package com.example.com3104_group10.ui.notifications;
+package com.example.com3104_group10.ui.map;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
