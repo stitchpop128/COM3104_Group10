@@ -181,6 +181,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textSize="25dp"/>
+
         <TextView
             android:id="@+id/tv_DER"
             android:gravity="center"
