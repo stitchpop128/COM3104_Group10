@@ -23,19 +23,17 @@
             android:gravity="center"
             android:textSize="15sp"
             />
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Pet Type: "
+                android:textSize="15sp" />
 
-
-
-        <RadioGroup android:id="@+id/rg_type">
-
-            <TableRow>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="Pet Type: "
-                    android:textSize="15sp" />
+            <RadioGroup
+                android:id="@+id/rg_type"
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/rb_dog"
@@ -50,11 +48,10 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:text="Cat" />
-            </TableRow>
-        </RadioGroup>
+            </RadioGroup>
+        </TableRow>
 
         <TableRow>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -76,59 +73,38 @@
             android:text="Pet condition: "
             android:textSize="15sp" />
 
-        <RadioGroup android:id="@+id/rg_condition">
-
-            <TableRow>
-
-                <RadioButton
-                    android:id="@+id/rb_notligated"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Not Ligated" />
-
-                <RadioButton
-                    android:id="@+id/rb_ligated"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ligated" />
-
-                <RadioButton
-                    android:id="@+id/rb_overwight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Overweight" />
-            </TableRow>
-
-            <TableRow>
-
-                <RadioButton
-                    android:id="@+id/rb_ultralight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ultra light" />
-
-                <RadioButton
-                    android:id="@+id/rb_develop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Developmental period" />
-                <RadioButton
-                    android:id="@+id/rb_advanced"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Advanced age" />
-            </TableRow>
+        <RadioGroup
+            android:id="@+id/rg_condition"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rb_notligated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="has/not Ligated" />
+            <RadioButton
+                android:id="@+id/rb_overwight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Overweight"/>
+            <RadioButton
+                android:id="@+id/rb_ultralight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lightly"/>
+            <RadioButton
+                android:id="@+id/rb_advanced"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Old age" />
         </RadioGroup>
 
         <TableRow>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="Feed Metabolism Energy(kcal/kg):"
                 android:textSize="15dp" />
-
             <EditText
                 android:id="@+id/et_fme"
                 android:layout_width="150dp"
@@ -152,44 +128,39 @@
         </TableRow>
 
         <TableRow>
-
             <TextView
                 android:layout_width="168dp"
                 android:layout_height="match_parent"
                 android:padding="20dp"
                 android:text="If you can't find the Feed Metabolism Energy, here is a picture example in the right button."
                 android:textSize="15dp" />
-
             <Button
                 android:id="@+id/bt_example"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Example" />
         </TableRow>
-
-
         <Button
             android:id="@+id/bt_cal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Calculate!"/>
-        <TextView
-            android:id="@+id/tv_result"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="25dp"/>
 
         <TextView
             android:id="@+id/tv_DER"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25dp"/>
+            android:textSize="20dp"
+            android:text="Your pet's daily caloric needs are:???"/>
+        <TextView
+            android:id="@+id/tv_result"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="our pet needs:???gram per meal everyday"
+            android:textSize="20dp"/>
 
     </TableLayout>
-
-
 </FrameLayout>
