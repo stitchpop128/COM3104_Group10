@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.com3104_group10.fragments.CalculatorFragment;
+//import com.example.com3104_group10.fragments.DrawingFragment;
 import com.example.com3104_group10.fragments.DrawingFragment;
 import com.example.com3104_group10.fragments.MapFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
