@@ -7,8 +7,8 @@
 
 
     <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Please_enter_below_data"
+            android:text="Please enter below data"
             android:gravity="center"
             android:textSize="15sp"
             />
@@ -56,13 +56,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Weight: "
+                android:text="Weight (kg): "
                 android:textSize="15sp" />
 
             <EditText
                 android:id="@+id/et_weight"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:text="0"
                 android:inputType="text" />
         </TableRow>
 
@@ -109,6 +110,7 @@
                 android:id="@+id/et_fme"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:text="0"
                 android:inputType="text" />
         </TableRow>
 
@@ -124,6 +126,7 @@
                 android:id="@+id/et_nummeals"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:text="0"
                 android:inputType="text"/>
         </TableRow>
 
@@ -152,14 +155,12 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="Your pet's daily caloric needs are:???"/>
+            android:textSize="20dp"/>
         <TextView
             android:id="@+id/tv_result"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="our pet needs:???gram per meal everyday"
             android:textSize="20dp"/>
 
     </TableLayout>

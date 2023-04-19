@@ -1,15 +1,21 @@
 package com.example.com3104_group10.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -35,13 +41,13 @@ public class CalculatorFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private EditText et_Weight,et_NumMeals,et_Energy;
+    private EditText et_Weight, et_NumMeals, et_Energy;
     private RadioGroup rg_type;
-    private RadioButton rb_dog,rb_cat;
+    private RadioButton rb_dog, rb_cat;
     private RadioGroup rg_Condition;
-    private RadioButton rb_notLigated,rb_ligated,rb_overweight,rb_ultraLight,rb_developmental,rb_advanced;
-    private Button bt_cal,bt_example;
-    private TextView tv_result,tv_DER;
+    private RadioButton rb_notLigated, rb_ligated, rb_overweight, rb_ultraLight, rb_developmental, rb_advanced;
+    private Button bt_cal, bt_example;
+    private TextView tv_result, tv_DER;
 
     /**
      * Use this factory method to create a new instance of
@@ -78,8 +84,8 @@ public class CalculatorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View FrameView = inflater.inflate(R.layout.fragment_calculator, container,false);
-        et_Weight=FrameView.findViewById(R.id.et_weight);
+        View FrameView = inflater.inflate(R.layout.fragment_calculator, container, false);
+        et_Weight = FrameView.findViewById(R.id.et_weight);
         et_NumMeals = FrameView.findViewById(R.id.et_nummeals);
         et_Energy = FrameView.findViewById(R.id.et_fme);
         rg_type = FrameView.findViewById(R.id.rg_type);
@@ -91,31 +97,64 @@ public class CalculatorFragment extends Fragment {
         rb_ultraLight = FrameView.findViewById(R.id.rb_ultralight);
         rb_advanced = FrameView.findViewById(R.id.rb_advanced);
         bt_cal = FrameView.findViewById(R.id.bt_cal);
-        bt_example= FrameView.findViewById(R.id.bt_example);
+        bt_example = FrameView.findViewById(R.id.bt_example);
         tv_DER = FrameView.findViewById(R.id.tv_DER);
         tv_result = FrameView.findViewById(R.id.tv_result);
+
+        rg_type.check(R.id.rb_dog);
+        rg_Condition.check(R.id.rb_notligated);
 
         bt_example.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlertDialog.Builder ImageDialog = new AlertDialog.Builder(et_NumMeals.getContext());
+//                ImageDialog.setTitle("Title");
+
+                ImageView image = new ImageView(et_NumMeals.getContext());
+                image.setImageResource(R.drawable.example);
+                image.setScaleType(ImageView.ScaleType.FIT_XY);
+                int imageWidth = (int) (et_NumMeals.getContext().getResources().getDisplayMetrics().widthPixels * 0.8);
+                int originalImgWidth = image.getDrawable().getIntrinsicWidth();
+                double percentageChange = (imageWidth - originalImgWidth) / originalImgWidth;
+                int imageHeight;
+                int originalImgHeight = image.getDrawable().getIntrinsicHeight();
+                if (percentageChange > 0) {
+                    imageHeight = (int) ((1 + percentageChange) * originalImgHeight);
+                } else {
+                    imageHeight = (int) ((percentageChange) * originalImgHeight);
+                }
+                image.setMinimumWidth(imageWidth);
+                image.setMinimumHeight(imageHeight);
+                ImageDialog.setView(image);
+
+                ImageDialog.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                    }
+                });
+                ImageDialog.show();
             }
         });
 
         bt_cal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double weight = Double.parseDouble(et_Weight.getText().toString())*30+70;
-                int type = rb_dog.isChecked() ? 1 : rb_cat.isChecked() ? 2 : -1;
-                int Condition = rb_notLigated.isChecked() ? 1 : rb_overweight.isChecked() ? 2 :rb_ultraLight.isChecked() ? 3 :rb_advanced.isChecked() ? 4 :-1;
+                try {
+                    double weight = Double.parseDouble(et_Weight.getText().toString()) * 30 + 70;
+                    int type = rb_dog.isChecked() ? 1 : rb_cat.isChecked() ? 2 : -1;
+                    int Condition = rb_notLigated.isChecked() ? 1 : rb_overweight.isChecked() ? 2 : rb_ultraLight.isChecked() ? 3 : rb_advanced.isChecked() ? 4 : -1;
 
-                double energy = calculateEnergy(type, Condition, weight); //DER
+                    double energy = calculateEnergy(type, Condition, weight); //DER
 
-                tv_DER.setText(String.format("Your pet's daily caloric needs are: %.2f calories", energy));
+                    tv_DER.setText(String.format("Your pet's daily caloric needs are: %.2f calories", energy));
 
-                double staple_food_calories=energy*0.90; //主食熱量
-                double x=staple_food_calories*1000/Double.parseDouble(et_Energy.getText().toString());//飼料代謝熱量
-                double result=x/Double.parseDouble(et_NumMeals.getText().toString());//每餐所需份量
-                tv_result.setText(String.format("Your pet needs: %.2f gram per meal everyday",result));
+                    double staple_food_calories = energy * 0.90; //主食熱量
+                    double x = staple_food_calories * 1000 / Double.parseDouble(et_Energy.getText().toString());//飼料代謝熱量
+                    double result = x / Double.parseDouble(et_NumMeals.getText().toString());//每餐所需份量
+                    tv_result.setText(String.format("Your pet needs: %.2f gram per meal everyday", result));
+                } catch (java.lang.NumberFormatException e) {
+//                    ...
+                }
             }
 
             public double calculateEnergy(int type, int Condition, double weight) {
@@ -163,16 +202,10 @@ public class CalculatorFragment extends Fragment {
                         baseEnergy = 0;
                         break;
                 }
-
                 return baseEnergy * weight;
             }
-
         });
-
 
         return FrameView;
     }
-
-
-
 }
