@@ -1,8 +1,10 @@
 package com.example.com3104_group10.fragments;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -23,6 +25,10 @@ import android.widget.Toast;
 
 import com.example.com3104_group10.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.locks.Condition;
 
 /**
@@ -41,12 +47,12 @@ public class CalculatorFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private EditText et_Weight, et_NumMeals, et_Energy;
+    private EditText et_Weight, et_NumMeals, et_Energy, et_Name;
     private RadioGroup rg_type;
     private RadioButton rb_dog, rb_cat;
     private RadioGroup rg_Condition;
     private RadioButton rb_notLigated, rb_ligated, rb_overweight, rb_ultraLight, rb_developmental, rb_advanced;
-    private Button bt_cal, bt_example;
+    private Button bt_cal, bt_example, bt_his;
     private TextView tv_result, tv_DER;
 
     /**
@@ -88,6 +94,7 @@ public class CalculatorFragment extends Fragment {
         et_Weight = FrameView.findViewById(R.id.et_weight);
         et_NumMeals = FrameView.findViewById(R.id.et_nummeals);
         et_Energy = FrameView.findViewById(R.id.et_fme);
+        et_Name = FrameView.findViewById(R.id.et_name);
         rg_type = FrameView.findViewById(R.id.rg_type);
         rb_dog = FrameView.findViewById(R.id.rb_dog);
         rb_cat = FrameView.findViewById(R.id.rb_cat);
@@ -98,8 +105,10 @@ public class CalculatorFragment extends Fragment {
         rb_advanced = FrameView.findViewById(R.id.rb_advanced);
         bt_cal = FrameView.findViewById(R.id.bt_cal);
         bt_example = FrameView.findViewById(R.id.bt_example);
+        bt_his = FrameView.findViewById(R.id.bt_his);
         tv_DER = FrameView.findViewById(R.id.tv_DER);
         tv_result = FrameView.findViewById(R.id.tv_result);
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
         rg_type.check(R.id.rb_dog);
         rg_Condition.check(R.id.rb_notligated);
@@ -143,6 +152,8 @@ public class CalculatorFragment extends Fragment {
                     double weight = Double.parseDouble(et_Weight.getText().toString()) * 30 + 70;
                     int type = rb_dog.isChecked() ? 1 : rb_cat.isChecked() ? 2 : -1;
                     int Condition = rb_notLigated.isChecked() ? 1 : rb_overweight.isChecked() ? 2 : rb_ultraLight.isChecked() ? 3 : rb_advanced.isChecked() ? 4 : -1;
+                    String TType = rb_dog.isChecked() ? "Dog" : rb_cat.isChecked() ? "Cat" : "Not Provide";
+                    String TCondition = rb_notLigated.isChecked() ? "Not Ligated" : rb_overweight.isChecked() ? "Overweight" :rb_ultraLight.isChecked() ? "Ultra Light" :rb_advanced.isChecked() ? "Advanced" :"Not Provide";
 
                     double energy = calculateEnergy(type, Condition, weight); //DER
 
@@ -152,6 +163,16 @@ public class CalculatorFragment extends Fragment {
                     double x = staple_food_calories * 1000 / Double.parseDouble(et_Energy.getText().toString());//飼料代謝熱量
                     double result = x / Double.parseDouble(et_NumMeals.getText().toString());//每餐所需份量
                     tv_result.setText(String.format("Your pet needs: %.2f gram per meal everyday", result));
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString(et_Name.toString(), "Name: "+et_Name.getText()+"  "+"Needs: "+ String.format("%.2f",x) +" gram per day");
+                    editor.apply();
+//                    String dataString = sharedPref.getString("OMG", "");
+//                    if (!dataString.isEmpty()) {
+//                        List<String> data = new ArrayList<>(Arrays.asList(dataString.split(":")));
+//                        tv_test1.setText(data.get(0) + data.get(1) + data.get(2));
+//
+//                    }
+
                 } catch (java.lang.NumberFormatException e) {
 //                    ...
                 }
@@ -203,6 +224,43 @@ public class CalculatorFragment extends Fragment {
                         break;
                 }
                 return baseEnergy * weight;
+            }
+        });
+
+        bt_his.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder historyDialog = new AlertDialog.Builder(getContext());
+                historyDialog.setTitle("Recent Searching History");
+
+                Map<String,?> keys = sharedPref.getAll();
+                String [] items = new String[keys.size()];
+                int cnt = 0;
+                for(Map.Entry<String,?> entry : keys.entrySet()){
+                    entry.getKey();
+                    items[cnt] = entry.getValue().toString();
+                    cnt++;
+                }
+
+                historyDialog.setItems(items, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                    }
+                });
+
+                historyDialog.setPositiveButton("Clear History", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        sharedPref.edit().clear().commit();
+                    }
+                });
+
+                historyDialog.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                    }
+                });
+
+                historyDialog.show();
             }
         });
 
