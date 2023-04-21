@@ -58,7 +58,7 @@ public class CalculatorFragment extends Fragment {
     private RadioGroup rg_type;
     private RadioButton rb_dog, rb_cat;
     private RadioGroup rg_Condition;
-    private RadioButton rb_notLigated, rb_ligated, rb_overweight, rb_ultraLight, rb_developmental, rb_advanced;
+    private RadioButton rb_notLigated, rb_overweight, rb_ultraLight, rb_advanced;
     private Button bt_cal, bt_example, bt_his;
     private TextView tv_result, tv_DER;
 
@@ -159,8 +159,8 @@ public class CalculatorFragment extends Fragment {
                     double weight = Double.parseDouble(et_Weight.getText().toString()) * 30 + 70;
                     int type = rb_dog.isChecked() ? 1 : rb_cat.isChecked() ? 2 : -1;
                     int Condition = rb_notLigated.isChecked() ? 1 : rb_overweight.isChecked() ? 2 : rb_ultraLight.isChecked() ? 3 : rb_advanced.isChecked() ? 4 : -1;
-                    String TType = rb_dog.isChecked() ? "Dog" : rb_cat.isChecked() ? "Cat" : "Not Provide";
-                    String TCondition = rb_notLigated.isChecked() ? "Not Ligated" : rb_overweight.isChecked() ? "Overweight" : rb_ultraLight.isChecked() ? "Ultra Light" : rb_advanced.isChecked() ? "Advanced" : "Not Provide";
+//                    String TType = rb_dog.isChecked() ? "Dog" : rb_cat.isChecked() ? "Cat" : "Not Provide";
+//                    String TCondition = rb_notLigated.isChecked() ? "Not Ligated" : rb_overweight.isChecked() ? "Overweight" : rb_ultraLight.isChecked() ? "Ultra Light" : rb_advanced.isChecked() ? "Advanced" : "Not Provide";
 
                     double energy = calculateEnergy(type, Condition, weight); //DER
 
@@ -190,16 +190,16 @@ public class CalculatorFragment extends Fragment {
                 switch (type) {
                     case 1: //dog
                         switch (Condition) {
-                            case 1:
+                            case 1: //rb_notLigated
                                 baseEnergy = 1.6;
                                 break;
-                            case 2:
+                            case 2: //rb_overweight
                                 baseEnergy = 1.2;
                                 break;
-                            case 3:
+                            case 3: //rb_ultraLight
                                 baseEnergy = 3;
                                 break;
-                            case 4:
+                            case 4: //rb_advanced
                                 baseEnergy = 1.2;
                                 break;
                             default:
@@ -209,16 +209,16 @@ public class CalculatorFragment extends Fragment {
                         break;
                     case 2: //cat
                         switch (Condition) {
-                            case 1:
+                            case 1: //rb_notLigated
                                 baseEnergy = 1.4;
                                 break;
-                            case 2:
+                            case 2: //rb_overweight
                                 baseEnergy = 0.9;
                                 break;
-                            case 3:
+                            case 3: //rb_ultraLight
                                 baseEnergy = 1.5;
                                 break;
-                            case 4:
+                            case 4: //rb_ultraLight
                                 baseEnergy = 1.4;
                                 break;
                             default:
