@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -14,16 +15,22 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.com3104_group10.CustomAdapter;
 import com.example.com3104_group10.R;
+
+import org.xmlpull.v1.XmlPullParser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -153,7 +160,7 @@ public class CalculatorFragment extends Fragment {
                     int type = rb_dog.isChecked() ? 1 : rb_cat.isChecked() ? 2 : -1;
                     int Condition = rb_notLigated.isChecked() ? 1 : rb_overweight.isChecked() ? 2 : rb_ultraLight.isChecked() ? 3 : rb_advanced.isChecked() ? 4 : -1;
                     String TType = rb_dog.isChecked() ? "Dog" : rb_cat.isChecked() ? "Cat" : "Not Provide";
-                    String TCondition = rb_notLigated.isChecked() ? "Not Ligated" : rb_overweight.isChecked() ? "Overweight" :rb_ultraLight.isChecked() ? "Ultra Light" :rb_advanced.isChecked() ? "Advanced" :"Not Provide";
+                    String TCondition = rb_notLigated.isChecked() ? "Not Ligated" : rb_overweight.isChecked() ? "Overweight" : rb_ultraLight.isChecked() ? "Ultra Light" : rb_advanced.isChecked() ? "Advanced" : "Not Provide";
 
                     double energy = calculateEnergy(type, Condition, weight); //DER
 
@@ -164,7 +171,7 @@ public class CalculatorFragment extends Fragment {
                     double result = x / Double.parseDouble(et_NumMeals.getText().toString());//每餐所需份量
                     tv_result.setText(String.format("Your pet needs: %.2f gram per meal everyday", result));
                     SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString(et_Name.toString(), "Name: "+et_Name.getText()+"  "+"Needs: "+ String.format("%.2f",x) +" gram per day");
+                    editor.putString(et_Name.getText().toString(), "Name: " + et_Name.getText() + "  " + "Needs: " + String.format("%.2f", x) + " gram per day");
                     editor.apply();
 //                    String dataString = sharedPref.getString("OMG", "");
 //                    if (!dataString.isEmpty()) {
@@ -233,20 +240,26 @@ public class CalculatorFragment extends Fragment {
                 AlertDialog.Builder historyDialog = new AlertDialog.Builder(getContext());
                 historyDialog.setTitle("Recent Searching History");
 
-                Map<String,?> keys = sharedPref.getAll();
-                String [] items = new String[keys.size()];
+                Map<String, ?> keys = sharedPref.getAll();
+                String[] items = new String[keys.size()];
                 int cnt = 0;
-                for(Map.Entry<String,?> entry : keys.entrySet()){
+                for (Map.Entry<String, ?> entry : keys.entrySet()) {
                     entry.getKey();
                     items[cnt] = entry.getValue().toString();
                     cnt++;
                 }
 
-                historyDialog.setItems(items, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
+                ListView listView = new ListView(getContext());
+                int itemHeight = 400;
+                CustomAdapter adapter = new CustomAdapter(getContext(), android.R.layout.simple_list_item_1, Arrays.asList(items), itemHeight);
+                listView.setAdapter(adapter);
+                historyDialog.setView(listView);
 
-                    }
-                });
+//                historyDialog.setItems(items, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface arg0, int arg1) {
+//
+//                    }
+//                });
 
                 historyDialog.setPositiveButton("Clear History", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
