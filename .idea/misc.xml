@@ -3,19 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../../layout/custom_preview.xml" value="0.1398148148148148" />
         <entry key="..\:/Users/joyce/AndroidStudioProjects/COM3104_Group10/app/src/main/res/drawable-v24/ic_colorpicker.xml" value="0.1" />
         <entry key="..\:/Users/joyce/AndroidStudioProjects/COM3104_Group10/app/src/main/res/drawable-v24/ic_save.xml" value="0.1" />
         <entry key="..\:/Users/joyce/AndroidStudioProjects/COM3104_Group10/app/src/main/res/drawable-v24/ic_undo.xml" value="0.1" />
         <entry key="..\:/Users/joyce/AndroidStudioProjects/COM3104_Group10/app/src/main/res/drawable/ic_cal.xml" value="0.1" />
-        <entry key="..\:/Users/joyce/AndroidStudioProjects/COM3104_Group10/app/src/main/res/drawable/ic_his.xml" value="0.19114583333333332" />
-        <entry key="..\:/Users/joyce/AndroidStudioProjects/COM3104_Group10/app/src/main/res/drawable/ic_map.xml" value="0.19114583333333332" />
         <entry key="..\:/Users/joyce/AndroidStudioProjects/COM3104_Group10/app/src/main/res/layout/fragment_calculator.xml" value="0.1" />
         <entry key="..\:/Users/joyce/AndroidStudioProjects/COM3104_Group10/app/src/main/res/layout/fragment_drawing.xml" value="0.1" />
-        <entry key="..\:/Users/joyce/AndroidStudioProjects/COM3104_Group10/app/src/main/res/layout/fragment_history.xml" value="0.11865942028985507" />
         <entry key="..\:/Users/joyce/AndroidStudioProjects/COM3104_Group10/app/src/main/res/layout/fragment_map.xml" value="0.1" />
-        <entry key="..\:/Users/joyce/AndroidStudioProjects/COM3104_Group10/app/src/main/res/layout/sidebar.xml" value="0.11865942028985507" />
-        <entry key="..\:/Users/joyce/AndroidStudioProjects/COM3104_Group10/app/src/main/res/layout/tabbar.xml" value="0.11865942028985507" />
-        <entry key="..\:/Users/joyce/AndroidStudioProjects/COM3104_Group10/app/src/main/res/menu/menu_nav.xml" value="0.175" />
         <entry key="app/src/main/res/layout/activity_calculator.xml" value="0.14361702127659576" />
         <entry key="app/src/main/res/layout/activity_drawing.xml" value="0.1503623188405797" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
@@ -25,6 +20,7 @@
         <entry key="app/src/main/res/layout/fragment_map.xml" value="0.1503623188405797" />
         <entry key="app/src/main/res/layout/tabbar.xml" value="0.14361702127659576" />
         <entry key="app/src/main/res/menu/menu_nav.xml" value="0.2907692307692308" />
+        <entry key="app/src/main/res/xml/file_paths.xml" value="0.1578125" />
       </map>
     </option>
   </component>

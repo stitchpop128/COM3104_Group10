@@ -3,11 +3,16 @@ package com.example.com3104_group10.fragments;
 import androidx.annotation.Nullable;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Environment;
+import android.os.FileUriExposedException;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +23,7 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.example.com3104_group10.R;
@@ -26,6 +32,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -80,12 +87,21 @@ public class DrawingFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Log.d("Joyce", "no permission");
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+            Log.d("Joyce", "asking for permission");
+//            Snackbar.make(getView(), "Please CLICK SAVE BUTTON AGAIN to save your drawing", Snackbar.LENGTH_LONG).show();
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View FView = inflater.inflate(R.layout.fragment_drawing, container,false);
+        View FView = inflater.inflate(R.layout.fragment_drawing, container, false);
 
         // getting the reference of the views from their ids
         paint = (DrawView) FView.findViewById(R.id.draw_view);
@@ -114,43 +130,34 @@ public class DrawingFragment extends Fragment {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(getActivity(),
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-                        && ActivityCompat.checkSelfPermission(getActivity(),
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    Log.d("Joyce", "no permission");
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
-                    Log.d("Joyce", "asking for permission");
-                    Snackbar.make(view, "Please CLICK SAVE BUTTON AGAIN to save your drawing", Snackbar.LENGTH_LONG).show();
-                } else {
-                    // getting the bitmap from DrawView class
-                    Bitmap bmp = paint.save();
+                // getting the bitmap from DrawView class
+                Bitmap bmp = paint.save();
 
-                    String root = Environment.getExternalStoragePublicDirectory(
-                            Environment.DIRECTORY_PICTURES).toString();
-//                    String gallery = Environment.DIRECTORY_DCIM.toString();
-                    File myDir = new File(root + "/saved_pet_images");
-                    if (!myDir.exists()) {
-                        myDir.mkdirs();
-                    }
-                    Random generator = new Random();
-                    int n = 10000;
-                    n = generator.nextInt(n);
-                    String fname = "Image-"+ n +".jpg";
-                    File file = new File (myDir, fname);
-                    if (file.exists ())
-                        file.delete ();
-                    try {
-                        FileOutputStream out = new FileOutputStream(file);
-                        bmp.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                        Snackbar.make(view, "Saved in " + myDir , Snackbar.LENGTH_LONG).show();
-                        out.flush();
-                        out.close();
+                try {
+                    String imgPath = saveToStorage(bmp);
+                    File imgFile = new File(imgPath);
+                    Uri imgUri = FileProvider.getUriForFile(getContext(), getActivity().getPackageName() + ".fileprovider", imgFile);
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    // create an intent to send this picture to someone
+                    Intent shareIntent = new Intent();
+                    // Set the intent’s action to be Intent.ACTION_SEND,so the intent will look
+                    // for other applications who can receive the “send” action
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    // EXTRA_TEXT is the text to go with the image
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, "This is my pet drawing created myself");
+                    // Intent.EXTRA_STREAM is used to send media contents
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, imgUri);
+                    // Add flag FLAG_GRANT_READ_URI_PERMISSION :
+                    // the new application is granted to decode the URI
+                    shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    // Set the content type to image, so the OS will
+                    // look for all apps that can receive media type ==
+                    // image (whatsapp, wechat, Google Drive, sms….)
+                    shareIntent.setType("image/*");
+                    startActivity(shareIntent);
+                } catch (Exception e) {
+                    Log.d("Cyrus", e.toString());
                 }
             }
         });
@@ -188,6 +195,7 @@ public class DrawingFragment extends Fragment {
                         // set it as the stroke color
                         paint.setColor(color);
                     }
+
                     @Override
                     public void onCancel() {
                         colorPicker.dismissDialog();
@@ -244,6 +252,41 @@ public class DrawingFragment extends Fragment {
         });
 
         return FView;
+    }
+
+    private String saveToStorage(Bitmap bitmapImage) {
+        // Create a path
+        // Unseen directory (of VM)
+//        ContextWrapper cw = new ContextWrapper(getActivity());
+//        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE); // path to /data/user/0/yourapp/app_imageDir
+        // External directory (out of VM, including Internal Shared Storage and SD Card Storage)
+        File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        // File name
+        Long tsLong = System.currentTimeMillis() / 1000; // Get system current timestamp
+        String n = tsLong.toString();
+        String fname = "img-" + n + ".png";
+        // Create a file
+        File mypath = new File(directory, fname);
+
+        // Compress and save bitmap under the mentioned fileName
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            Snackbar.make(getView(), "Saved in " + mypath, Snackbar.LENGTH_LONG).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+//        return directory.getAbsolutePath();
+        return mypath.toString();
     }
 }
 
