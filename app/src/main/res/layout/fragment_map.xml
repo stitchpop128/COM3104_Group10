@@ -5,10 +5,50 @@
     android:layout_height="match_parent"
     tools:context=".fragments.MapFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linear_map_fragment"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/tab_map"
-        android:layout_gravity="center"/>
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/bt_pet_shop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_shop"
+            />
+
+        <ImageButton
+            android:id="@+id/bt_pet_clinic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_med"
+            />
+
+        <ImageButton
+            android:id="@+id/bt_pet_friendly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_walk"
+            />
+    </LinearLayout>
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_450sdp"
+        android:layout_gravity="bottom"
+        />
+    </LinearLayout>
 
 </FrameLayout>

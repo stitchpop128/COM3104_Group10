@@ -3,8 +3,6 @@ package com.example.com3104_group10.fragments;
 import androidx.annotation.Nullable;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -12,7 +10,6 @@ import android.os.Bundle;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Environment;
-import android.os.FileUriExposedException;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +32,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 import petrov.kristiyan.colorpicker.ColorPicker;
 

@@ -11,6 +11,15 @@
         <entry key="..\:/Users/joyce/AndroidStudioProjects/COM3104_Group10/app/src/main/res/layout/fragment_calculator.xml" value="0.1" />
         <entry key="..\:/Users/joyce/AndroidStudioProjects/COM3104_Group10/app/src/main/res/layout/fragment_drawing.xml" value="0.1" />
         <entry key="..\:/Users/joyce/AndroidStudioProjects/COM3104_Group10/app/src/main/res/layout/fragment_map.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/ic_colorpicker.xml" value="0.13333333333333333" />
+        <entry key="app/src/main/res/drawable-v24/ic_eraser.xml" value="0.13333333333333333" />
+        <entry key="app/src/main/res/drawable-v24/ic_paint_brush.xml" value="0.13333333333333333" />
+        <entry key="app/src/main/res/drawable/ic_cal.xml" value="0.13333333333333333" />
+        <entry key="app/src/main/res/drawable/ic_dra.xml" value="0.13333333333333333" />
+        <entry key="app/src/main/res/drawable/ic_med.xml" value="0.13333333333333333" />
+        <entry key="app/src/main/res/drawable/ic_pet.xml" value="0.13333333333333333" />
+        <entry key="app/src/main/res/drawable/ic_shop.xml" value="0.13333333333333333" />
+        <entry key="app/src/main/res/drawable/ic_walk.xml" value="0.13333333333333333" />
         <entry key="app/src/main/res/layout/activity_calculator.xml" value="0.14361702127659576" />
         <entry key="app/src/main/res/layout/activity_drawing.xml" value="0.1503623188405797" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
